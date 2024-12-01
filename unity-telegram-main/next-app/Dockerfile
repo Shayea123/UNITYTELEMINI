@@ -1,5 +1,5 @@
 # Use Node.js 18 as the base image
-FROM node:18
+FROM node:18.17.0
 
 # Set the working directory
 WORKDIR /app
@@ -19,8 +19,6 @@ RUN rm -rf .next
 # Build the Next.js app
 RUN npm run build
 
-# Expose the port (optional, but good practice)
-EXPOSE 3000
 
 # Start the Next.js production server with Railway's dynamic port
 CMD ["npm", "run", "start"]

@@ -1,5 +1,5 @@
 # Use Node.js 18 as the base image
-FROM node:18
+FROM node:18.17.0
 
 # Set the working directory
 WORKDIR /app
@@ -13,8 +13,6 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
-# Expose the port (optional, but good practice)
-EXPOSE 3000
 
 # Start the Telegram bot with dynamic port support
 CMD ["npm", "start"]
