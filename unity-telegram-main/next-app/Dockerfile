@@ -13,11 +13,14 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
+# Clear any previous build cache
+RUN rm -rf .next
+
 # Build the Next.js app
 RUN npm run build
 
 # Expose the port (optional, but good practice)
 EXPOSE 3000
 
-# Start the Next.js production server with dynamic port support
+# Start the Next.js production server with Railway's dynamic port
 CMD ["npm", "run", "start"]
