@@ -13,8 +13,11 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
-# Expose the port Next.js runs on
+# Build the Next.js app
+RUN npm run build
+
+# Expose the port (optional, but good practice)
 EXPOSE 3000
 
-# Start the application
+# Start the Next.js production server with dynamic port support
 CMD ["npm", "run", "start"]

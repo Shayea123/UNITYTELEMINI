@@ -13,8 +13,8 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
-# Expose the port the bot listens on
+# Expose the port (optional, but good practice)
 EXPOSE 3000
 
-# Start the bot
+# Start the Telegram bot with dynamic port support
 CMD ["npm", "start"]
