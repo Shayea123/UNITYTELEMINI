@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title>Unity Telegram Template</title>
+    <style>
+        /* Remove default margins and paddings, and prevent scroll bars */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Ensure the Unity container fills the viewport */
+        #unity-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Ensure the Unity canvas fills the container */
+        #unity-canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Background color for the canvas */
+        canvas {
+            background: black;
+        }
+
+        /* Progress bar styling */
+        #loading-cover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #unity-loading-bar {
+            width: 50%;
+            height: 10px;
+            background-color: #555;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #unity-progress-bar-full {
+            width: 0%;
+            height: 100%;
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div id="unity-container">
+        <canvas id="unity-canvas"></canvas>
+    </div>
+    <div id="loading-cover">
+        <div id="unity-loading-bar">
+            <div id="unity-progress-bar-full"></div>
+        </div>
+    </div>
+    <script>
+        const buildUrl = "Build";
+        const loaderUrl = buildUrl + "/unity-webgl.loader.js";
+
+        const config = {
+            dataUrl: buildUrl + "/unity-webgl.data",
+            frameworkUrl: buildUrl + "/unity-webgl.framework.js",
+            codeUrl: buildUrl + "/unity-webgl.wasm",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "thirdweb",
+            productName: "Unity Telegram Template",
+            productVersion: "0.1",
+        };
+
+        const canvas = document.querySelector("#unity-canvas");
+        const loadingCover = document.querySelector("#loading-cover");
+        const progressBarFull = document.querySelector("#unity-progress-bar-full");
+
+        const script = document.createElement("script");
+        script.src = loaderUrl;
+
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = `${progress * 100}%`;
+            }).then((unityInstance) => {
+                loadingCover.style.display = "none";
+            }).catch((message) => {
+                console.error("Error creating Unity instance: ", message);
+            });
+        };
+
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
